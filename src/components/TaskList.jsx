@@ -3,7 +3,7 @@ import React from 'react'
 import Task from './Task'
 import AddTask from './AddTask'
 
-class TaskList extends React.Component {
+export default class TaskList extends React.Component {
     state = {
         isAddTask: false,
     }
@@ -30,7 +30,8 @@ class TaskList extends React.Component {
                 taskDescription={task.description}
                 taskDueDate={task["due date"]}
                 taskDate={task.date}
-                {...this.props} />
+                {...this.props}
+            />
         )
 
         return (
@@ -40,12 +41,10 @@ class TaskList extends React.Component {
                     <AddTask 
                         {...this.props}
                         cancelAddTask={this.handleClickCancelAddTask}
-                        />
+                    />
                     :
-                    <div onClick={this.handleClickAddTask} className="new">Add a task...</div>}
+                    <div onClick={this.handleClickAddTask} className="add-new">Add a task...</div>}
             </div>
         )
     }
 }
-
-export default TaskList

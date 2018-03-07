@@ -7,6 +7,11 @@ body {
     margin: 0 0.5rem 0 0;
 }
 
+.groups__item header,
+.groups__item .inner {
+    cursor: pointer;
+}
+
 .groups {
     display: flex;
 }
@@ -19,7 +24,6 @@ body {
 
 .logo {
     position: absolute;
-    /* top: 50%; */
     left: 50%;
 }
 
@@ -36,6 +40,7 @@ body {
     background-color: white;
     border-radius: 3px;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .modal-task > div {

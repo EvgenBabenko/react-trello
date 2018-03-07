@@ -3,12 +3,9 @@ import {createPortal} from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
 
-import ButtonDelete from '../ButtonDelete'
-import ButtonCancel from '../ButtonCancel'
-import ButtonSubmit from '../ButtonSubmit'
 import EditTask from '../EditTask'
 
-class ModalTask extends React.Component {
+export default class ModalTask extends React.Component {
     state = {
         isTaskEdit: false,
     }
@@ -43,7 +40,7 @@ class ModalTask extends React.Component {
                     <EditTask 
                         {...this.props}
                         cancelClickTask={this.onClickCancel}
-                        />
+                    />
                     :
                     <div>
                         <h2>{taskTitle}</h2>
@@ -51,9 +48,11 @@ class ModalTask extends React.Component {
                         <h6>{taskDescription}</h6>
                         <h4>Due date</h4>
                         <h6>{taskDueDate}</h6>
-                        <ButtonSubmit onSubmitButtonClick={ () => this.setState({isTaskEdit: true}) } value={'Edit'} />
-                        <ButtonCancel onCancelButtonClick={closeModalTask} />
-                        <ButtonDelete onDeleteButtonClick={this.handleDeleteTask} />
+                        <h4>Attachments</h4>
+                        
+                        <button onClick={ () => this.setState({isTaskEdit: true}) } className="btn btn-primary">Edit</button>
+                        <button onClick={closeModalTask} className="btn btn-link">Cancel</button>
+                        <button onClick={this.handleDeleteTask} className="btn btn-danger btn-sm">Delete</button>
                     </div>
                 }
                 {this.props.children}
@@ -62,5 +61,3 @@ class ModalTask extends React.Component {
         )
     }
 }
-
-export default ModalTask

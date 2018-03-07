@@ -19,7 +19,7 @@ Builds the app for production to the `build` folder.
 
 ## Technical requirements
  
-~~Strikethrough item~~ is done
+~~Strikethrough item~~ is complete
 
 On front-end:
 * ~~Angular or Angularjs or React or Vue~~
@@ -58,7 +58,7 @@ User should have:
 * email
 
 ~~Modal opens by click on task by authorized user.~~<br>
-When unauthorized user clicks on tasks modal contains a log-in/register form
+~~When unauthorized user clicks on tasks modal contains a log-in/register form~~
 
 Authorization should be implemented with jwt-tokens.<br>
 *Authorization with social network(google+, facebook, twitter, etc);

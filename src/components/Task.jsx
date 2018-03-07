@@ -2,39 +2,63 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import ModalTask from './ModalTask'
+import ModalSignIn from './ModalSignIn'
 
-class Task extends React.Component {
+export default class Task extends React.Component {
     state = {
         isTaskClicked: false,
-        isModalOpen: false,
+        isModalTaskOpen: false,
+        isModalSignInOpen: false,
     }
 
-    toggleModal = () => {
-        if (!this.props.isUserSignIn) {
-            console.log('popppp')
-            return
+    handleClick = () => {
+        if (this.props.isUserSignIn) {
+            this.setState({
+                isModalTaskOpen: true,
+            })
+        } else {
+            this.setState({
+                isModalSignInOpen: true,
+            })
         }
+        this.setState({
+            isTaskClicked: true,
+        })
+    }
 
-        this.setState({isTaskClicked: !this.state.isTaskClicked})
+    handleCancel = () => {
+        this.setState({
+            isTaskClicked: false,
+            isModalSignInOpen: false,
+            isModalTaskOpen: false,
+        })
     }
 
     render() {
         const {taskID, groupID, taskTitle, onClickTask} = this.props;
 
+        const selectModal = (() => {
+            if (this.props.isUserSignIn && this.state.isTaskClicked) {
+                return <ModalTask
+                    {...this.props}
+                    closeModalTask={this.handleCancel}
+                />
+            } else if (!this.props.isUserSignIn && this.state.isTaskClicked) {
+                return <ModalSignIn
+                    {...this.props}
+
+                    closeModalSignIn={ (user) => this.props.flowUser(user) }
+                />
+            }
+        })()
+
         return (
             <div onClick={onClickTask.bind(this, taskID, groupID)} className="tasks__item" id={taskID}>
-                <div onClick={this.toggleModal}>{taskTitle}</div>
+                <div onClick={this.handleClick}>{taskTitle}</div>
             
-                {this.state.isTaskClicked &&
-                    <ModalTask
-                        {...this.props}
-                        closeModalTask={this.toggleModal}
-                        />
-                }
+                {selectModal}
                 
             </div>
         )
     }
 }
-
-export default Task

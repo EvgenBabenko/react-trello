@@ -1,8 +1,5 @@
 import React from 'react'
 
-import ButtonSubmit from './ButtonSubmit'
-import ButtonCancel from './ButtonCancel'
-
 export default function AddTask(props) {
     const {cancelAddTask, createTask} = props;
 
@@ -22,6 +19,7 @@ export default function AddTask(props) {
             description: '',
             "due date": date,
             date,
+            attachments: []
         }
 
         createTask(item);
@@ -33,8 +31,8 @@ export default function AddTask(props) {
             <div className="form-group">
                 <textarea className="form-control" name="" id="" rows="5" placeholder="New task"></textarea>
             </div>
-            <ButtonSubmit value={'Add'}/>
-            <ButtonCancel onCancelButtonClick={cancelAddTask} />
+            <button className="btn btn-primary">Add</button>
+            <button onClick={cancelAddTask} className="btn btn-link">Cancel</button>
         </form>
     )
 }

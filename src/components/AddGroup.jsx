@@ -1,8 +1,5 @@
 import React from 'react'
 
-import ButtonSubmit from './ButtonSubmit'
-import ButtonCancel from './ButtonCancel'
-
 export default function AddGroup(props) {
     const {cancelAddGroup, createGroup} = props;
 
@@ -24,12 +21,8 @@ export default function AddGroup(props) {
         }
 
         createGroup(item);
+        cancelAddGroup(e);
         
-    }
-
-    function handleClickCancel(e) {
-        e.preventDefault();
-        cancelAddGroup();
     }
 
     return (
@@ -37,8 +30,8 @@ export default function AddGroup(props) {
             <div className="form-group">
                 <textarea className="form-control" name="" id="" rows="5" placeholder="New group"></textarea>
             </div>
-            <ButtonSubmit value={'Add'}/>
-            <ButtonCancel onCancelButtonClick={handleClickCancel} />
+            <button className="btn btn-primary">Add</button>
+            <button onClick={cancelAddGroup} className="btn btn-link">Cancel</button>
         </form>
     )
 }

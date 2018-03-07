@@ -1,9 +1,10 @@
 import React from 'react'
 
 import TaskList from './TaskList'
+// import TaskList from './TaskListDrag'
 import EditGroup from './EditGroup'
 
-class Group extends React.Component {
+export default class Group extends React.Component {
     state = {
         isGroupEdit: false,
         value: null,
@@ -28,7 +29,7 @@ class Group extends React.Component {
 
         return (
 
-            <div onClick={onClickGroup.bind(this, groupID)} className="groups__item droppable" id={groupID}>
+            <div onClick={onClickGroup.bind(this, groupID)} className="groups__item" id={groupID}>
                 <div className="inner">
                     <header className="">
                     
@@ -36,7 +37,8 @@ class Group extends React.Component {
                             <EditGroup
                                 {...this.props}
                                 cancelClickGroup={this.onClickCancel}
-                                /> : 
+                            />
+                            : 
                             <h5 onClick={this.handleEditGroup}>{groupTitle}</h5>}
 
                     </header>
@@ -47,5 +49,3 @@ class Group extends React.Component {
         )
     }
 }
-
-export default Group

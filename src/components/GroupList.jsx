@@ -2,11 +2,10 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 
 // import groups from '../fixtures'
-// import controller from '../controller'
 import Group from './Group'
 import AddGroup from './AddGroup'
 
-class GroupList extends React.Component {
+export default class GroupList extends React.Component {
     state = {
         data: [],
         currentIDGroup: null,
@@ -24,7 +23,6 @@ class GroupList extends React.Component {
     handleClickGroup = (id) => {
         if (id === this.state.currentIDGroup) return
         
-        console.log('handle click id group', id)
         const {currentIndexGroup} = this.findIndex(id);
         const currentTitleGroup = this.state.data[currentIndexGroup].title;
 
@@ -38,10 +36,8 @@ class GroupList extends React.Component {
     handleClickTask = (idTask, idGroup) => {
         if (idTask === this.state.currentIDTask) return
         
-        console.log('handle click id task', idTask)
         const {currentIndexTask, currentIndexGroup} = this.findIndex(idGroup, idTask);
         const currentTitleTask = this.state.data[currentIndexGroup].tasks[currentIndexTask].title;
-        console.log('task title', currentIndexTask, currentTitleTask)
 
         this.setState({
             currentIDTask: idTask,
@@ -56,11 +52,6 @@ class GroupList extends React.Component {
         
         this.setState({ isAddGroup: true })
     };
-    
-
-    handleClickCancelAddGroup = () => {
-        this.setState({ isAddGroup: false })
-    }
     
     findIndex = (idGroup, idTask) => {
         let currentIndexGroup;
@@ -81,13 +72,7 @@ class GroupList extends React.Component {
         return {currentIndexGroup, currentIndexTask};
     }
 
-    onChangeTitleGroup = (e) => {
-        console.log('onChangeGroup', e.target.value)
-        this.setState({currentTitleGroup: e.target.value})
-    }
-
     createGroup = (item) => {
-        console.log('createGroup', item)
         this.state.data.push(item);
 
         this.setState({
@@ -98,38 +83,29 @@ class GroupList extends React.Component {
     }
 
     updateGroup = (title) => {
-        console.log('update', title)
         const groupClone = this.state.data[this.state.currentIndexGroup];
         groupClone.title = title;
-        console.log('update', groupClone)
         this.state.data.splice(this.state.currentIndexGroup, 1, groupClone);
         this.setState({data: this.state.data})
     }
 
     deleteGroup = () => {
-        console.log('deleteGroup', this.state.currentIDGroup);
-
         this.state.data.splice(this.state.currentIndexGroup, 1);
         this.setState({ data: this.state.data })
     }
 
     createTask = (item) => {
-        console.log('createTask', item, this.state.currentIndexGroup)
         this.state.data[this.state.currentIndexGroup].tasks.push(item);
 
         this.setState({
             data: this.state.data,
         })
-
-        console.log('this.state.data', this.state.data)
     }
 
     updateTask = (title, description) => {
-        console.log('update', title, description)
         const taskClone = this.state.data[this.state.currentIndexGroup].tasks[this.state.currentIndexTask];
         taskClone.title = title;
         taskClone.description = description;
-        console.log('update', taskClone)
         this.state.data[this.state.currentIndexGroup].tasks.splice(this.state.currentIndexTask, 1, taskClone)
         this.setState({data: this.state.data})
     }
@@ -138,16 +114,6 @@ class GroupList extends React.Component {
         this.state.data[this.state.currentIndexGroup].tasks.splice(this.state.currentIndexTask, 1);
 
         this.setState({ data: this.state.data })
-    }
-
-    onChangeTitleTask = (e) => {
-        console.log('onChangeGroup', e.target.value)
-        this.setState({currentTitleTask: e.target.value})
-    }
-
-    onChangeDescriptionTask = (e) => {
-        console.log('onChangeGroup', e.target.value)
-        this.setState({currentDescriptionTask: e.target.value})
     }
 
     render() {
@@ -167,32 +133,35 @@ class GroupList extends React.Component {
                 currentTitleGroup={this.state.currentTitleGroup}
                 updateGroup={this.updateGroup}
                 deleteGroup={this.deleteGroup}
-                onChangeGroup={this.onChangeTitleGroup}
+                onChangeGroup={ ({ target }) => this.setState({currentTitleGroup: target.value}) }
 
                 currentTitleTask={this.state.currentTitleTask}
                 currentDescriptionTask={this.state.currentDescriptionTask}
                 createTask={this.createTask}
                 updateTask={this.updateTask}
                 deleteTask={this.deleteTask}
-                onChangeTask={this.onChangeTitleTask}
-                onChangeTaskDescription={this.onChangeDescriptionTask}
-                />
+                onChangeTask={ ({ target }) => this.setState({currentTitleTask: target.value}) }
+                onChangeTaskDescription={ ({ target }) => this.setState({currentDescriptionTask: target.value}) }
+            />
         )
         
         return (
             <div className="dashboard container-fluid">
                 <div className="groups">
+
                     {groupElement}
         
-                    <div className="groups__item add-new">
+                    <div className="groups__item">
                         <div className="inner">
                         
                             {this.state.isAddGroup ? 
                                 <AddGroup
-                                    cancelAddGroup={this.handleClickCancelAddGroup}
+                                    cancelAddGroup={ () => this.setState({ isAddGroup: false }) }
                                     createGroup={this.createGroup}
-                                    /> : 
-                                <div onClick={this.handleClickAddGroup} className="new">Add a group...</div>}
+                                />
+                                : 
+                                <div onClick={this.handleClickAddGroup}>Add a group...</div>
+                            }
 
                         </div>
                     </div> 
@@ -201,5 +170,3 @@ class GroupList extends React.Component {
         )
     }
 }
-
-export default GroupList

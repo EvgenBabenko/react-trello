@@ -1,30 +1,27 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
-// import from 'react-dnd'
 
 import GroupList from './GroupList'
 import ModalSignIn from './ModalSignIn';
-import ButtonSubmit from './ButtonSubmit';
 
-class App extends React.Component {
+export default class App extends React.Component {
     state = {
-        isUserSignIn: false,
+        isUserSignIn: '',
         isModalOpen: false,
     }
 
     toggleSignIn = () => {
         if (this.state.isUserSignIn && !this.state.isModalOpen) {
-            this.setState({ isUserSignIn: false })
+            this.setState({ isUserSignIn: '' })
         } else {
             this.setState({ isModalOpen: true })
         }
     }
 
-    handleCloseModal = (e) => {
-        e.preventDefault()
+    handleLogin = (user) => {
         this.setState({
-            isUserSignIn: true,
-            isModalOpen: false
+            isUserSignIn: user,
+            isModalOpen: false,
         })
     }
 
@@ -36,15 +33,17 @@ class App extends React.Component {
                 <header className="main__header container-fluid clearfix">
                     <h2 className="logo">Trello</h2>
                     <div className="info float-right">
-                        <div className="user">User</div>
-                        <ButtonSubmit onSubmitButtonClick={this.toggleSignIn} value={this.state.isUserSignIn ? 'Sign out': 'Sign in'} />
+                        <div className="user">{this.state.isUserSignIn ? this.state.isUserSignIn : 'Guest'}</div>
+                        <button onClick={this.toggleSignIn} className="btn btn-primary">
+                            {this.state.isUserSignIn ? 'Sign out': 'Sign in'}
+                        </button>
                     </div>
                 </header>
 
                 <GroupList 
                     isUserSignIn={this.state.isUserSignIn}
-                    closeModalSignIn={this.handleCloseModal}
-                    />
+                    flowUser={ (user) => this.setState({ isUserSignIn: user }) }
+                />
                 
                 <footer>
                     #Footer
@@ -52,11 +51,11 @@ class App extends React.Component {
 
                 {this.state.isModalOpen &&
                     !this.state.isUserSignIn &&
-                    <ModalSignIn closeModalSignIn={this.handleCloseModal}/>
-                    }
+                    <ModalSignIn 
+                        closeModalSignIn={this.handleLogin}
+                    />
+                }
             </main>
         )
     }
 }
-
-export default App

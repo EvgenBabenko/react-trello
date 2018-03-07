@@ -1,15 +1,10 @@
 import React from 'react'
 
-import ButtonCancel from './ButtonCancel'
-import ButtonDelete from './ButtonDelete'
-import ButtonSubmit from './ButtonSubmit'
-
 export default function EditGroup(props) {
     const {currentTitleGroup, deleteGroup, updateGroup, cancelClickGroup, onChangeGroup} = props;
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('submit', currentTitleGroup)
         updateGroup(currentTitleGroup);
         cancelClickGroup(e);
     }
@@ -22,11 +17,11 @@ export default function EditGroup(props) {
     return (
         <form>
             <div className="form-group">
-                <textarea onChange={onChangeGroup} className="form-control" name="" id="" rows="5" value={currentTitleGroup} />
+                <textarea onChange={onChangeGroup} value={currentTitleGroup} className="form-control" name="" id="" rows="5" />
             </div>
-            <ButtonSubmit onSubmitButtonClick={handleSubmit} value={'Update'} />
-            <ButtonCancel onCancelButtonClick={cancelClickGroup} />
-            <ButtonDelete onDeleteButtonClick={handlerDelete} />
+            <button onClick={handleSubmit} className="btn btn-primary">Update</button>
+            <button onClick={cancelClickGroup} className="btn btn-link">Cancel</button>
+            <button onClick={handlerDelete} className="btn btn-danger btn-sm">Delete</button>
         </form>
     )
 }
