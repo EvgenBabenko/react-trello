@@ -1,11 +1,10 @@
 {
   "name": "react-trello",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0",
     "react": "^16.2.0",
-    "react-beautiful-dnd": "^5.0.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1"
   },
