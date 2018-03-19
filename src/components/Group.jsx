@@ -30,8 +30,7 @@ export default class Group extends React.Component {
         return (
 
             <div onClick={onClickGroup.bind(this, groupID)} className="groups__item" id={groupID}>
-                <div className="inner">
-                    <header className="">
+                    <header className="title">
                     
                         {this.state.isGroupEdit ? 
                             <EditGroup
@@ -44,7 +43,6 @@ export default class Group extends React.Component {
                     </header>
     
                     <TaskList {...this.props} />
-                </div>
             </div>
         )
     }

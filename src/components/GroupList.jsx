@@ -1,5 +1,8 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
+import reactDragula from 'react-dragula';
+import 'dragula/dist/dragula.css'
+import Sortable from 'sortablejs';
 
 // import groups from '../fixtures'
 import Group from './Group'
@@ -91,6 +94,7 @@ export default class GroupList extends React.Component {
 
     deleteGroup = () => {
         this.state.data.splice(this.state.currentIndexGroup, 1);
+
         this.setState({ data: this.state.data })
     }
 
@@ -115,6 +119,40 @@ export default class GroupList extends React.Component {
 
         this.setState({ data: this.state.data })
     }
+
+    // sortable = (componentBackingInstance) => {
+    //     console.log('ref', componentBackingInstance)
+    //     if (componentBackingInstance) {
+
+    //         let options = {
+    //             mirrorContainer: componentBackingInstance
+    //             // invalid: function (el, handle) {
+    //             //     console.log(el.classList.contains('.tasks'))
+    //             //     return el.classList.contains('.tasks');
+    //             // }
+    //         };
+
+    //         reactDragula([componentBackingInstance], options);
+    //     }
+    // };
+
+    sortable = (componentBackingInstance) => {
+        if (componentBackingInstance) {
+            let options = {
+                animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+                handle: ".title", // Restricts sort start click/touch to the specified element
+                draggable: ".groups__item", // Specifies which items inside the element should be sortable
+                onUpdate: function (evt/**Event*/){
+                   var item = evt.item; // the current dragged HTMLElement
+                }
+            };
+            Sortable.create(componentBackingInstance, options);
+        }
+    }
+
+    // componentDidMount() {
+    //     console.log(refs.iii)
+    // }
 
     render() {
         console.log(this.props)
@@ -144,12 +182,13 @@ export default class GroupList extends React.Component {
                 onChangeTaskDescription={ ({ target }) => this.setState({currentDescriptionTask: target.value}) }
             />
         )
-        
+
         return (
             <div className="dashboard container-fluid">
-                <div className="groups">
+                <div className="groups" ref={this.sortable}>
 
                     {groupElement}
+
         
                     <div className="groups__item">
                         <div className="inner">

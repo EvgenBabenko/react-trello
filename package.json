@@ -4,9 +4,14 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "dragula": "^3.7.2",
+    "express": "^4.16.2",
     "react": "^16.2.0",
+    "react-beautiful-dnd": "^5.0.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "react-dragula": "^1.1.17",
+    "react-scripts": "1.1.1",
+    "sortablejs": "^1.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
