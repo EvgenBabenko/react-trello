@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import GroupList from './GroupList'
 import ModalSignIn from './ModalSignIn';
 
-export default class App extends React.Component {
+export default class App extends Component {
     state = {
         isUserSignIn: '',
         isModalOpen: false,
     }
 
     toggleSignIn = () => {
-        if (this.state.isUserSignIn && !this.state.isModalOpen) {
+        const { isUserSignIn, isModalOpen } = this.state;
+        
+        if (isUserSignIn && !isModalOpen) {
             this.setState({ isUserSignIn: '' })
         } else {
             this.setState({ isModalOpen: true })
@@ -27,21 +29,23 @@ export default class App extends React.Component {
 
     render() {
         console.log(this.state)
+        const { isUserSignIn, isModalOpen } = this.state;
+
         return (
-            <main className="main">
+            <React.Fragment>
     
                 <header className="main__header container-fluid clearfix">
                     <h2 className="logo">Trello</h2>
                     <div className="info float-right">
-                        <div className="user">{this.state.isUserSignIn ? this.state.isUserSignIn : 'Guest'}</div>
+                        <div className="user">{isUserSignIn ? isUserSignIn : 'Guest'}</div>
                         <button onClick={this.toggleSignIn} className="btn btn-primary">
-                            {this.state.isUserSignIn ? 'Sign out': 'Sign in'}
+                            {isUserSignIn ? 'Sign out': 'Sign in'}
                         </button>
                     </div>
                 </header>
 
                 <GroupList 
-                    isUserSignIn={this.state.isUserSignIn}
+                    isUserSignIn={isUserSignIn}
                     flowUser={ (user) => this.setState({ isUserSignIn: user }) }
                 />
                 
@@ -49,13 +53,12 @@ export default class App extends React.Component {
                     #Footer
                 </footer>
 
-                {this.state.isModalOpen &&
-                    !this.state.isUserSignIn &&
-                    <ModalSignIn 
-                        closeModalSignIn={this.handleLogin}
-                    />
+                {isModalOpen &&
+                    !isUserSignIn &&
+                        <ModalSignIn closeModalSignIn={this.handleLogin} />
                 }
-            </main>
+
+            </React.Fragment>
         )
     }
 }

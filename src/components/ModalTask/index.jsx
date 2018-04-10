@@ -6,11 +6,12 @@ import './style.css'
 import EditTask from '../EditTask'
 
 export default class ModalTask extends React.Component {
-    state = {
-        isTaskEdit: false,
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            isTaskEdit: false,
+        };
 
-    componentWillMount() {
         this.root = document.createElement('div');
         this.root.className = "modal-task container-fluid d-flex justify-content-center"
         document.body.appendChild(this.root);
@@ -36,13 +37,12 @@ export default class ModalTask extends React.Component {
         const {closeModalTask, taskTitle, taskDescription, taskDueDate} = this.props;
         return createPortal(
             <div className="card m-5 p-3 col-md-5 text-center">
-                {this.state.isTaskEdit ? 
-                    <EditTask 
+                {this.state.isTaskEdit
+                    ? <EditTask 
                         {...this.props}
                         cancelClickTask={this.onClickCancel}
                     />
-                    :
-                    <div>
+                    : <div>
                         <h2>{taskTitle}</h2>
                         <h4>Description</h4>
                         <h6>{taskDescription}</h6>

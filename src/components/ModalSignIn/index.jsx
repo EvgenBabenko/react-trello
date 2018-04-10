@@ -4,16 +4,17 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
 
 export default class ModalSignIn extends React.Component {
-    state = {
-        emailValue:''
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            emailValue:''
+        };
 
-    componentWillMount() {
         this.root = document.createElement('div');
         this.root.className = "signin container-fluid d-flex justify-content-center align-items-center"
         document.body.appendChild(this.root);
     }
-
+    
     componentWillUnmount() {
         document.body.removeChild(this.root);
     }
@@ -23,6 +24,8 @@ export default class ModalSignIn extends React.Component {
     }
     
     render() {
+        const { closeModalSignIn, children } = this.props;
+
         return createPortal(
             <div className="col-md-5 text-center">
                 <h1>Trello</h1>
@@ -33,9 +36,9 @@ export default class ModalSignIn extends React.Component {
                     <div className="form-group">
                         <input className="form-control" type="password" placeholder="Password" />
                     </div>
-                    <button onClick={this.props.closeModalSignIn.bind(this, this.state.emailValue)} className="btn btn-primary btn-block">Sign in</button>
+                    <button onClick={closeModalSignIn.bind(this, this.state.emailValue)} className="btn btn-primary btn-block">Sign in</button>
                 </form>
-                {this.props.children}
+                {children}
             </div>,
             this.root
         )

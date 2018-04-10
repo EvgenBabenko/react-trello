@@ -32,13 +32,13 @@ export default class Group extends React.Component {
             <div onClick={onClickGroup.bind(this, groupID)} className="groups__item" id={groupID}>
                     <header className="title">
                     
-                        {this.state.isGroupEdit ? 
-                            <EditGroup
+                        {this.state.isGroupEdit
+                            ? <EditGroup
                                 {...this.props}
                                 cancelClickGroup={this.onClickCancel}
                             />
-                            : 
-                            <h5 onClick={this.handleEditGroup}>{groupTitle}</h5>}
+                            : <h5 onClick={this.handleEditGroup}>{groupTitle}</h5>
+                        }
 
                     </header>
     

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import ModalTask from './ModalTask'
 import ModalSignIn from './ModalSignIn'
 
-export default class Task extends React.Component {
+export default class Task extends Component {
     state = {
         isTaskClicked: false,
         isModalTaskOpen: false,
@@ -21,6 +21,7 @@ export default class Task extends React.Component {
                 isModalSignInOpen: true,
             })
         }
+
         this.setState({
             isTaskClicked: true,
         })
@@ -35,15 +36,15 @@ export default class Task extends React.Component {
     }
 
     render() {
-        const {taskID, groupID, taskTitle, onClickTask} = this.props;
-
+        const { taskID, groupID, taskTitle, onClickTask, isUserSignIn } = this.props;
+        const { isTaskClicked } = this.state;
         const selectModal = (() => {
-            if (this.props.isUserSignIn && this.state.isTaskClicked) {
+            if (isUserSignIn && isTaskClicked) {
                 return <ModalTask
                     {...this.props}
                     closeModalTask={this.handleCancel}
                 />
-            } else if (!this.props.isUserSignIn && this.state.isTaskClicked) {
+            } else if (!isUserSignIn && isTaskClicked) {
                 return <ModalSignIn
                     {...this.props}
 
