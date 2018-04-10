@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
-import reactDragula from 'react-dragula';
-import 'dragula/dist/dragula.css'
 import Sortable from 'sortablejs';
 
 // import groups from '../fixtures'
 import Group from './Group'
 import AddGroup from './AddGroup'
 
-export default class GroupList extends React.Component {
+export default class extends Component {
     state = {
         data: [],
         currentIDGroup: null,
@@ -120,39 +118,34 @@ export default class GroupList extends React.Component {
         this.setState({ data: this.state.data })
     }
 
-    // sortable = (componentBackingInstance) => {
-    //     console.log('ref', componentBackingInstance)
-    //     if (componentBackingInstance) {
-
-    //         let options = {
-    //             mirrorContainer: componentBackingInstance
-    //             // invalid: function (el, handle) {
-    //             //     console.log(el.classList.contains('.tasks'))
-    //             //     return el.classList.contains('.tasks');
-    //             // }
-    //         };
-
-    //         reactDragula([componentBackingInstance], options);
-    //     }
-    // };
-
-    sortable = (componentBackingInstance) => {
+    sortableContainersDecorator = (componentBackingInstance) => {
+        // check if backing instance not null
         if (componentBackingInstance) {
             let options = {
                 animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
                 handle: ".title", // Restricts sort start click/touch to the specified element
-                draggable: ".groups__item", // Specifies which items inside the element should be sortable
-                onUpdate: function (evt/**Event*/){
-                   var item = evt.item; // the current dragged HTMLElement
-                }
+                // onUpdate: function (evt/**Event*/){
+                //     var item = evt.item; // the current dragged HTMLElement
+                // }
             };
             Sortable.create(componentBackingInstance, options);
         }
-    }
+    };
 
-    // componentDidMount() {
-    //     console.log(refs.iii)
-    // }
+    sortableGroupDecorator = (componentBackingInstance) => {
+        // check if backing instance not null
+        if (componentBackingInstance) {
+            let options = {
+                animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+                draggable: ".tasks__item", // Specifies which items inside the element should be sortable
+                group: "shared",
+                // onUpdate: function (evt/**Event*/){
+                //     var item = evt.item; // the current dragged HTMLElement
+                // }
+            };
+            Sortable.create(componentBackingInstance, options);
+        }
+    };
 
     render() {
         console.log(this.props)
@@ -160,6 +153,7 @@ export default class GroupList extends React.Component {
         const groupElement = this.state.data.map(group =>
             <Group 
                 {...this.props}
+                sortableGroupDecorator={this.sortableGroupDecorator}
                 onClickGroup={this.handleClickGroup}
                 onClickTask={this.handleClickTask}
 
@@ -185,21 +179,19 @@ export default class GroupList extends React.Component {
 
         return (
             <div className="dashboard container-fluid">
-                <div className="groups" ref={this.sortable}>
+                <div className="groups" ref={this.sortableContainersDecorator}>
 
                     {groupElement}
 
-        
                     <div className="groups__item">
                         <div className="inner">
                         
-                            {this.state.isAddGroup ? 
-                                <AddGroup
+                            {this.state.isAddGroup
+                                ? <AddGroup
                                     cancelAddGroup={ () => this.setState({ isAddGroup: false }) }
                                     createGroup={this.createGroup}
                                 />
-                                : 
-                                <div onClick={this.handleClickAddGroup}>Add a group...</div>
+                                : <div onClick={this.handleClickAddGroup}>Add a new group...</div>
                             }
 
                         </div>

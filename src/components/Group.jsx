@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import TaskList from './TaskList'
-// import TaskList from './TaskListDrag'
 import EditGroup from './EditGroup'
 
-export default class Group extends React.Component {
+export default class extends Component {
     state = {
         isGroupEdit: false,
         value: null,
@@ -21,28 +20,28 @@ export default class Group extends React.Component {
     onClickCancel = (event) => {
         event.preventDefault();
 
-        this.setState({isGroupEdit: false})
+        this.setState({ isGroupEdit: false })
     }
-     
+
     render() {
-        const {groupID, groupTitle, onClickGroup} = this.props;
+        const { groupID, groupTitle, onClickGroup } = this.props;
 
         return (
 
             <div onClick={onClickGroup.bind(this, groupID)} className="groups__item" id={groupID}>
-                    <header className="title">
-                    
-                        {this.state.isGroupEdit ? 
-                            <EditGroup
-                                {...this.props}
-                                cancelClickGroup={this.onClickCancel}
-                            />
-                            : 
-                            <h5 onClick={this.handleEditGroup}>{groupTitle}</h5>}
+                <header className="title">
 
-                    </header>
-    
-                    <TaskList {...this.props} />
+                    {this.state.isGroupEdit
+                        ? <EditGroup
+                            {...this.props}
+                            cancelClickGroup={this.onClickCancel}
+                        />
+                        : <h5 onClick={this.handleEditGroup}>{groupTitle}</h5>
+                    }
+
+                </header>
+
+                <TaskList {...this.props} />
             </div>
         )
     }

@@ -1,16 +1,19 @@
 import React from 'react'
 
-export default function EditGroup(props) {
+export default function (props) {
     const {currentTitleGroup, deleteGroup, updateGroup, cancelClickGroup, onChangeGroup} = props;
 
     function handleSubmit(e) {
         e.preventDefault();
+
         updateGroup(currentTitleGroup);
+
         cancelClickGroup(e);
     }
 
-    function handlerDelete(e) {
+    function handleDelete(e) {
         e.preventDefault();
+        
         deleteGroup();
     }
 
@@ -21,7 +24,7 @@ export default function EditGroup(props) {
             </div>
             <button onClick={handleSubmit} className="btn btn-primary">Update</button>
             <button onClick={cancelClickGroup} className="btn btn-link">Cancel</button>
-            <button onClick={handlerDelete} className="btn btn-danger btn-sm">Delete</button>
+            <button onClick={handleDelete} className="btn btn-danger btn-sm">Delete</button>
         </form>
     )
 }

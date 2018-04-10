@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AddTask(props) {
+export default function (props) {
     const {cancelAddTask, createTask} = props;
 
     function handleSubmit(event) {

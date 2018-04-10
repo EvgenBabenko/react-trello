@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AddGroup(props) {
+export default function (props) {
     const {cancelAddGroup, createGroup} = props;
 
     function handleSubmit(e) {

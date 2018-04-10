@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {createPortal} from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
 
 import EditTask from '../EditTask'
+import TaskDetail from '../TaskDetail'
 
-export default class ModalTask extends React.Component {
-    state = {
-        isTaskEdit: false,
-    }
+export default class extends Component {
+    constructor(props) {
+        super(props);
 
-    componentWillMount() {
+        this.state = {
+            isTaskEdit: false,
+        };
+
         this.root = document.createElement('div');
         this.root.className = "modal-task container-fluid d-flex justify-content-center"
         document.body.appendChild(this.root);
@@ -19,41 +22,38 @@ export default class ModalTask extends React.Component {
     componentWillUnmount() {
         document.body.removeChild(this.root);
     }
+    
+    editTask = () => {
+        this.setState({ isTaskEdit: true })
+    }
 
-    handleDeleteTask = (event) => {
-        event.preventDefault()
-        this.props.closeModalTask()
+    deleteTask = (event) => {
+        event.preventDefault();
+
+        this.props.closeModalTask();
+
         this.props.deleteTask();
     }
 
-    onClickCancel = (event) => {
+    cancelTask = (event) => {
         event.preventDefault();
 
-        this.setState({isTaskEdit: false})
+        this.setState({ isTaskEdit: false })
     }
     
     render() {
-        const {closeModalTask, taskTitle, taskDescription, taskDueDate} = this.props;
         return createPortal(
             <div className="card m-5 p-3 col-md-5 text-center">
-                {this.state.isTaskEdit ? 
-                    <EditTask 
+                {this.state.isTaskEdit
+                    ? <EditTask 
                         {...this.props}
-                        cancelClickTask={this.onClickCancel}
+                        cancelTask={this.cancelTask}
                     />
-                    :
-                    <div>
-                        <h2>{taskTitle}</h2>
-                        <h4>Description</h4>
-                        <h6>{taskDescription}</h6>
-                        <h4>Due date</h4>
-                        <h6>{taskDueDate}</h6>
-                        <h4>Attachments</h4>
-                        
-                        <button onClick={ () => this.setState({isTaskEdit: true}) } className="btn btn-primary">Edit</button>
-                        <button onClick={closeModalTask} className="btn btn-link">Cancel</button>
-                        <button onClick={this.handleDeleteTask} className="btn btn-danger btn-sm">Delete</button>
-                    </div>
+                    : <TaskDetail 
+                        {...this.props}
+                        editTask={this.editTask}
+                        deleteTask={this.deleteTask}
+                    />
                 }
                 {this.props.children}
             </div>,
