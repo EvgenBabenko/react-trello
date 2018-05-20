@@ -38,7 +38,6 @@ export default class extends Component {
     render() {
         const { taskID, groupID, taskTitle, onClickTask, isUserSignIn } = this.props;
         const { isTaskClicked } = this.state;
-
         const selectModal = (() => {
             if (isUserSignIn && isTaskClicked) {
                 return <ModalTask

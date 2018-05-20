@@ -27,6 +27,8 @@ export default class extends Component {
     }
     
     render() {
+        const { closeModalSignIn, children } = this.props;
+
         return createPortal(
             <SignIn
                 onChangeEmail={this.onChangeEmail}
