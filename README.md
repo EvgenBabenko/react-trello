@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Current technologies stack:
 * React
+* Redux
 * Bootstrap
 
 ## Instruction
@@ -18,17 +19,11 @@ Install all dependencies
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm run build`
-Builds the app for production to the `build` folder.
-
-### `serve -s build`
-Run static server, should be installed serve `npm install -g serve`
-
 ## Technical requirements
  
 On front-end:
-- [X] Angular or Angularjs or React or Vue
-- [X] any css framework of your choice(bootstrap, materialize, semantic-ui,  ui-kit)
+- [X] Angular/Angularjs/React/Vue(or any other framework of your choice)
+- [X] any css framework of your choice(bootstrap, materialize, semantic-ui, ui-kit)
 - [ ] any helpful npm/yarn packages(for example: lodash)
 
 On back-end:
@@ -36,40 +31,27 @@ On back-end:
 - [ ] SQL, or NoSQL database to store data(MySQL, PostgreSQL, MongoDB, etc)
 - [ ] any helpful npm/yarn packages of your choice
 
-Unauthorized users can: 
-- [X] only view a board, with groups of task, login/register to app to do more
+Unauthorized users can only: 
+- [X] view a board, with groups of task
+- [X] login/register to app
 
 Authorized users can: 
-- [X] create, 
-- [X] delete, 
-- [X] update tasks and groups, 
+- [X] create, delete, update tasks and groups 
 - [X] log out,
 - [X] drag’n’drop tasks inside the group and between groups, 
 - [X] view its details(in modal window).
 
-Task-item should have: 
-- [X] id
-- [X] title(which is viewed on a board-view and in modal)
-- [X] description(only in modal)
-- [X] due date(which is viewed on a board-view and in modal)
-- [ ] *attachments(images upload, viewed only in modal)
-
-Group-item should have: 
-- [X] id
-- [X] title
-
-User should have: 
-- [ ] name
-- [ ] email
-
 General
-
 - [X] Modal opens by click on task by authorized user
 - [X] When unauthorized user clicks on tasks modal contains a log-in/register form
 
 - [ ] Authorization should be implemented with jwt-tokens
 - [ ] *Authorization with social network(google+, facebook, twitter, etc)
 
-- [ ] Writing tests(unit, integration, etc) is a big plus <br>
+- [ ] Each input has to be validated(email, date, name, etc).
+
+- [ ] Writing tests(unit, integration, etc) is a big plus 
+
+- [ ] If there is no back-end, you have to imitate the real server with localStorage feature. Store all the info about application there (order and quantity of groups on board, order and quantity of tasks in each board, generated auth token for user). So if you reload the page and authorized user stays authorized, tasks and groups are kept on the places where they’ve been before page reload.
 
 Additional tasks marked with * (completing them is a plus)

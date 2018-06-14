@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import {createPortal} from 'react-dom'
+import { createPortal } from 'react-dom'
+import { connect } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
 
-import EditTask from '../EditTask'
-import TaskDetail from '../TaskDetail'
+import ModalTask from './ModalTask'
+import { activeActions } from '../../modules/active'
 
-export default class extends Component {
+class ModalTaskWrapper extends Component {
     constructor(props) {
         super(props);
 
@@ -15,49 +16,58 @@ export default class extends Component {
         };
 
         this.root = document.createElement('div');
-        this.root.className = "modal-task container-fluid d-flex justify-content-center"
+        this.root.className = "modal-task container-fluid d-flex justify-content-center align-items-center"
         document.body.appendChild(this.root);
     }
 
     componentWillUnmount() {
         document.body.removeChild(this.root);
     }
-    
-    editTask = () => {
+
+    handleEditTask = () => {
+        if (this.props.hasActive) return;
+
         this.setState({ isTaskEdit: true })
+
+        this.props.toggleActive()
     }
 
     deleteTask = (event) => {
         event.preventDefault();
 
-        this.props.closeModalTask();
+        this.props.handleCancelTaskClick();
 
         this.props.deleteTask();
     }
 
-    cancelTask = (event) => {
+    handleCancelEditTask = (event) => {
         event.preventDefault();
 
         this.setState({ isTaskEdit: false })
+
+        this.props.toggleActive()
     }
-    
+
     render() {
         return createPortal(
-            <div className="card m-5 p-3 col-md-5 text-center">
-                {this.state.isTaskEdit
-                    ? <EditTask 
-                        {...this.props}
-                        cancelTask={this.cancelTask}
-                    />
-                    : <TaskDetail 
-                        {...this.props}
-                        editTask={this.editTask}
-                        deleteTask={this.deleteTask}
-                    />
-                }
-                {this.props.children}
-            </div>,
+            <ModalTask
+                {...this.props}
+                {...this.state}
+                handleEditTask={this.handleEditTask}
+                handleCancelEditTask={this.handleCancelEditTask}
+                deleteTask={this.deleteTask}
+            />,
             this.root
         )
     }
 }
+
+const mapStateToProps = state => ({
+    hasActive: state.hasActive
+})
+
+const mapDispatchToProps = dispatch => ({
+    toggleActive: () => dispatch(activeActions.toggleActive()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalTaskWrapper)

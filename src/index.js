@@ -1,10 +1,18 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux';
 
 import App from './components/App'
+import store from './modules/store';
 import './index.css'
 
+// store.subscribe(() => 
+//     console.log('Store', store.getState())
+// )
+
 render(
-    <App />, 
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 )
